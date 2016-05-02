@@ -1,0 +1,20 @@
+language: rust
+sudo: false
+cache: cargo
+rust:
+  - stable
+  - beta
+  - nightly
+os:
+  - linux
+  - osx
+branches:
+  only:
+    - master
+    - auto
+script:
+  - cargo build -v --features strict
+  - cargo test -v --features strict
+  - cargo doc
+after_success:
+  - sh scripts/upload_doc.sh

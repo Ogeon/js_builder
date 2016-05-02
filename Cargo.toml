@@ -1,0 +1,9 @@
+[package]
+name = "js_builder"
+version = "0.0.1"
+authors = ["Erik Hedvall <hello@erikhedvall.nu>"]
+
+[dependencies]
+
+[features]
+strict = []
