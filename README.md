@@ -24,7 +24,7 @@ assert_eq!(
 );
 ```
 
-[Online documentation](https://ogeon.github.io/docs/js_builder/master/js_builder/index.html).
+[Online documentation](https://ogeon.github.io/docs/js_builder/master/js_builder/).
 
 # License
 
