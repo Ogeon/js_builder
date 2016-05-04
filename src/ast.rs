@@ -932,7 +932,7 @@ impl Print for Statement {
                 try!(f.write(") "));
                 try!(if_true.print_with(f));
                 if let Some(ref if_false) = *if_false {
-                    try!(f.write(" else "));
+                    try!(f.write("else "));
                     try!(if_false.print_with(f));
                 }
                 Ok(())

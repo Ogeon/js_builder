@@ -392,7 +392,7 @@ impl<N: Build<ast::Statement>> IfBuilder<N> {
     ///    .compact_print(&mut result);
     ///
     ///assert_eq!(
-    ///    "if(a == b) a += b; else a -= b;",
+    ///    "if(a == b) a += b;else a -= b;",
     ///    String::from_utf8_lossy(&result)
     ///);
     ///```
@@ -415,7 +415,7 @@ impl<N: Build<ast::Statement>> IfBuilder<N> {
     ///    .compact_print(&mut result);
     ///
     ///assert_eq!(
-    ///    "if(a == b) a += b; else if(a > b) a -= b;",
+    ///    "if(a == b) a += b;else if(a > b) a -= b;",
     ///    String::from_utf8_lossy(&result)
     ///);
     ///```
