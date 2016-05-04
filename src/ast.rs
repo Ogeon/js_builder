@@ -1,9 +1,10 @@
 //!Abstract syntax tree components.
 
-use std::borrow::Cow;
 use std::io::{self, Write};
 use std::fmt::{self, Display};
 use std::fmt::Write as FmtWrite;
+
+use string_cache::Atom;
 
 use builder::expression::{ExpressionBuilder, PathBaseBuilder, ValueExprBuilder, LhsExprBuilder};
 use builder::statement::{BlockBuilder, StatementBuilder, SourceElementBuilder};
@@ -11,7 +12,7 @@ use builder::function::FnBodyBuilder;
 use print::{Print, Formatter};
 
 ///An identifier.
-pub type Identifier = Cow<'static, str>;
+pub type Identifier = Atom;
 
 ///A chain of comma separated expressions.
 pub struct Expressions {
@@ -49,10 +50,10 @@ pub struct StringLiteral {
     pub double_quote: bool,
 
     ///The string.
-    pub string: Cow<'static, str>,
+    pub string: Atom,
 }
 
-impl<S: Into<Cow<'static, str>>> From<S> for StringLiteral {
+impl<S: Into<Atom>> From<S> for StringLiteral {
     fn from(string: S) -> StringLiteral {
         StringLiteral {
             double_quote: false,
@@ -115,7 +116,7 @@ impl Print for NumericLiteral {
 ///A regular expression literal.
 pub struct RegularExpression {
     ///The expression body (the part between `/.../`).
-    pub body: Cow<'static, str>,
+    pub body: Atom,
 
     ///The `g` flag.
     pub global: bool,
@@ -133,7 +134,7 @@ pub struct RegularExpression {
     pub sticky: bool,
 }
 
-impl<S: Into<Cow<'static, str>>> From<S> for RegularExpression {
+impl<S: Into<Atom>> From<S> for RegularExpression {
     fn from(body: S) -> RegularExpression {
         RegularExpression {
             body: body.into(),

@@ -26,6 +26,7 @@
 #![cfg_attr(feature = "strict", deny(missing_docs))]
 #![cfg_attr(feature = "strict", deny(warnings))]
 
+extern crate string_cache;
 
 pub mod ast;
 pub mod builder;
