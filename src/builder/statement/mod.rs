@@ -271,6 +271,11 @@ impl<N: Build<ast::Statement>> StatementBuilder<N> {
     pub fn return_nothing(self) -> N::Next {
         self.return_().comma().build()
     }
+
+    ///Use a pre-built statement, instead.
+    pub fn build_stmt(self, stmt: ast::Statement) -> N::Next {
+        self.0.build_with(stmt)
+    }
 }
 
 impl<N: Build<ast::Statement>> From<N> for StatementBuilder<N> {
