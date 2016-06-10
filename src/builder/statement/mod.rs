@@ -192,6 +192,98 @@ impl<N: Build<ast::Statement>> StatementBuilder<N> {
         ExpressionBuilder::from(IfAdapter::from(self.0))
     }
 
+    ///Build a `do ... while(...)` statement.
+    ///
+    ///```
+    ///use js_builder::ast::Statement;
+    ///use js_builder::Print;
+    ///
+    ///let mut result = Vec::new();
+    ///Statement::build().do_while()
+    ///    .expr().add_assign().id("a").number(1)
+    ///    .lt().id("a").id("b").build()
+    ///    .compact_print(&mut result);
+    ///
+    ///assert_eq!(
+    ///    "do a += 1; while(a < b);",
+    ///    String::from_utf8_lossy(&result)
+    ///);
+    ///```
+    pub fn do_while(self) -> StatementBuilder<DoAdapter<N>> {
+        StatementBuilder(DoAdapter::from(self.0))
+    }
+
+    ///Build a `while(...) ...` statement.
+    ///
+    ///```
+    ///use js_builder::ast::Statement;
+    ///use js_builder::Print;
+    ///
+    ///let mut result = Vec::new();
+    ///Statement::build().while_()
+    ///    .lt().id("a").id("b").build()
+    ///    .expr().add_assign().id("a").number(1)
+    ///    .compact_print(&mut result);
+    ///
+    ///assert_eq!(
+    ///    "while(a < b) a += 1;",
+    ///    String::from_utf8_lossy(&result)
+    ///);
+    ///```
+    pub fn while_(self) -> ExpressionBuilder<WhileAdapter<N>> {
+        ExpressionBuilder::from(WhileAdapter::from(self.0))
+    }
+
+    ///Build a `for(...; ...; ...) ...` statement.
+    ///
+    ///```
+    ///use js_builder::ast::Statement;
+    ///use js_builder::Print;
+    ///
+    ///let mut result = Vec::new();
+    ///Statement::build().for_()
+    ///    .assign().id("i").number(0)
+    ///    .lt().id("i").path().id("list").id("length").build().build()
+    ///    .post_incr().id("i")
+    ///    .expr().path().id("console").id("log").call()
+    ///        .arg().path().id("list").index().id("i").build()
+    ///        .build().build()
+    ///    .compact_print(&mut result);
+    ///
+    ///assert_eq!(
+    ///    "for(i = 0;i < list.length;i++) console.log(list[i]);",
+    ///    String::from_utf8_lossy(&result)
+    ///);
+    ///```
+    pub fn for_(self) -> ExpressionBuilder<ForInitAdapter<N>> {
+        ExpressionBuilder::from(ForInitAdapter::from(self.0))
+    }
+
+    ///Build a `for(var ...; ...; ...) ...` statement.
+    ///
+    ///```
+    ///use js_builder::ast::Statement;
+    ///use js_builder::Print;
+    ///
+    ///let mut result = Vec::new();
+    ///Statement::build().for_var()
+    ///    .inited("i").number(0).build()
+    ///    .lt().id("i").path().id("list").id("length").build().build()
+    ///    .post_incr().id("i")
+    ///    .expr().path().id("console").id("log").call()
+    ///        .arg().path().id("list").index().id("i").build()
+    ///        .build().build()
+    ///    .compact_print(&mut result);
+    ///
+    ///assert_eq!(
+    ///    "for(var i = 0;i < list.length;i++) console.log(list[i]);",
+    ///    String::from_utf8_lossy(&result)
+    ///);
+    ///```
+    pub fn for_var(self) -> VarsBuilder<ForInitAdapter<N>> {
+        VarsBuilder::from(ForInitAdapter::from(self.0))
+    }
+
     ///Build a `for(... in ...)` statement.
     ///
     ///```
